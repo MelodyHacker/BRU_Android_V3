@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "888832580440",
+    "firebase_url": "https://bru-admin-1524365745042.firebaseio.com",
+    "project_id": "bru-admin-1524365745042",
+    "storage_bucket": "bru-admin-1524365745042.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888832580440:android:78cb87e44f47bac9",
+        "android_client_info": {
+          "package_name": "com.example.tanon.mybru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888832580440-l3qdvv4ul88549kgqn32ms0uk124gvi9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tanon.mybru",
+            "certificate_hash": "dbd2d1433e6c92b852bae7a09aab5f01975ee575"
+          }
+        },
+        {
+          "client_id": "888832580440-525lspo45h4ucfphpr55o5efrsqmnvp6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPno7FmikC03efYFzJz9Sg-1gdLMKETc8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888832580440-525lspo45h4ucfphpr55o5efrsqmnvp6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
