@@ -135,7 +135,7 @@ public class EventItem extends AppCompatActivity {
             });
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.edit_text_event);
-            adapterseach = new ArrayAdapter<String>(EventItem.this, android.R.layout.simple_dropdown_item_1line, arrayseach);
+            adapterseach = new ArrayAdapter<String>(EventItem.this, R.layout.item_seach, arrayseach);
             autoCompleteTextView.setThreshold(1);
             autoCompleteTextView.setAdapter(adapterseach);
             autoCompleteTextView.setOnItemClickListener(this);

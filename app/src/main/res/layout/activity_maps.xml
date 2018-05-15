@@ -15,7 +15,7 @@
         tools:context="com.example.melodyhacker.bruapp.MainMap" />
 
 
-    <AutoCompleteTextView
+    <com.example.tanon.mybru.CEditTextView
         android:id="@+id/editTextmap"
         android:layout_width="250dp"
         android:layout_height="wrap_content"

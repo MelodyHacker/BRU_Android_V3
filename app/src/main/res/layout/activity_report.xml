@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:background="@drawable/back">
+    android:background="@drawable/back"
+    android:padding="10dp">
 
 
     <ImageView
@@ -26,7 +26,7 @@
         android:layout_marginRight="30dp"
         android:src="@drawable/arrow" />
 
-    <EditText
+    <com.example.tanon.mybru.CEditTextView
         android:id="@+id/report_name"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -35,7 +35,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="31dp"
         android:ems="10"
-        android:hint="Report......."
+        android:hint="@string/report"
         android:inputType="textPersonName"
         android:padding="20dp" />
 </RelativeLayout>

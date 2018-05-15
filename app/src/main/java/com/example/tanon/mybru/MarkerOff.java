@@ -8,9 +8,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,16 +19,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,18 +32,113 @@ import java.util.Map;
  */
 
 public class MarkerOff extends AppCompatActivity {
-    RequestQueue requestQueue;
+
     ProgressDialog mProgressDialog;
-    String[] ar;
+    RequestQueue requestQueue;
     Url url = new Url();
+    String[] ar_marker_off, ar_marker_event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
-        ///////////////////////////////////////////////////////////////////////////////////////
-        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        mProgressDialog = new ProgressDialog(MarkerOff.this);
+        mProgressDialog.setMessage("ยินดีต้อนรับกำลังโหลดข้อมูล......");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.show();
+
+        if (isNetworkConnected() == true) {
+            sendToken();
+            loadMarkerOff();
+            loadMarkerEvent();
+        } else {
+            Intent intent = new Intent(MarkerOff.this, NotInterNet.class);
+            startActivity(intent);
+        }
+
+    }
+
+    private void loadMarkerEvent() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url.jsonevent,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("events");
+                            int x = 0;
+                            ar_marker_event = new String[jsonArray.length() * 3];
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject MarkObject = jsonArray.getJSONObject(i);
+                                ar_marker_event[x] = MarkObject.getString("event_name");
+                                ar_marker_event[x + 1] = MarkObject.getString("lat_location");
+                                ar_marker_event[x + 2] = MarkObject.getString("long_location");
+                                x = x + 3;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if (ar_marker_event == null) {
+                            Intent intent = new Intent(MarkerOff.this, NotInterNet.class);
+                            startActivity(intent);
+                        } else {
+                            mProgressDialog.dismiss();
+                            Intent intent = new Intent(MarkerOff.this, MainActivity.class);
+                            intent.putExtra("arrayMarkerPoriline", ar_marker_off);
+                            intent.putExtra("arrayMarkerEvent", ar_marker_event);
+                            startActivity(intent);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());
+        requestQueue.add(stringRequest);
+    }
+
+    private void loadMarkerOff() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url.jsonporiline,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("poriline");
+                            int x = 0;
+                            ar_marker_off = new String[jsonArray.length() * 3];
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject MarkObject = jsonArray.getJSONObject(i);
+                                ar_marker_off[x] = MarkObject.getString("poriline_name");
+                                ar_marker_off[x + 1] = MarkObject.getString("poriline_lat");
+                                ar_marker_off[x + 2] = MarkObject.getString("poriline_long");
+                                x = x + 3;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if (ar_marker_off == null) {
+                            Intent intent = new Intent(MarkerOff.this, NotInterNet.class);
+                            startActivity(intent);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void sendToken() {
+        //  FirebaseMessaging.getInstance().subscribeToTopic("news");
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url.token, new Response.Listener<String>() {
             @Override
@@ -68,113 +158,11 @@ public class MarkerOff extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-        if (isNetworkConnected() == true) {
-
-        new MarkerOff.DownloadJSON().execute();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //avd  10.0.2.2.json.php
-                new MarkerOff.ReadJSON().execute(url.jsonporiline);
-            }
-        });
-        } else {
-            Intent intent = new Intent(MarkerOff.this, NotInterNet.class);
-            startActivity(intent);
-        }
-
-
     }
 
-    class ReadJSON extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            return readURL(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String content) {
-
-            try {
-                JSONObject jsonObject = new JSONObject(content);
-                JSONArray jsonArray = jsonObject.getJSONArray("poriline");
-
-                int x = 0;
-                ar = new String[jsonArray.length() * 3];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject MarkObject = jsonArray.getJSONObject(i);
-                    ar[x] = MarkObject.getString("poriline_name");
-                    ar[x + 1] = MarkObject.getString("poriline_lat");
-                    ar[x + 2] = MarkObject.getString("poriline_long");
-                    x = x + 3;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            mProgressDialog.dismiss();
-            ///////////////////////////////////////////////////////////////
-            if (ar == null) {
-                Intent intent = new Intent(MarkerOff.this, NotInterNet.class);
-                startActivity(intent);
-            } else {
-                Intent intent = new Intent(MarkerOff.this, MainActivity.class);
-                intent.putExtra("arrayMarkerPoriline", ar);
-                startActivity(intent);
-            }
-        }
-    }
-
-
-    private static String readURL(String theUrl) {
-        StringBuilder content = new StringBuilder();
-        try {
-
-            URL url = new URL(theUrl);
-            URLConnection urlConnection = url.openConnection();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line + "\n");
-            }
-            bufferedReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return content.toString();
-    }
-
-    private class DownloadJSON extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Create a progressdialog
-            mProgressDialog = new ProgressDialog(MarkerOff.this);
-            // Set progressdialog title
-            mProgressDialog.setMessage("ยินดีต้อนรับกำลังโหลดข้อมูล......");
-            mProgressDialog.setIndeterminate(false);
-            // Show progressdialog
-            mProgressDialog.show();
-
-        }
-    }
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
         return cm.getActiveNetworkInfo() != null;
     }
-
-
 }
-

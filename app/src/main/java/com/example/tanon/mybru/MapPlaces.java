@@ -92,7 +92,7 @@ public class MapPlaces extends AppCompatActivity implements OnMapReadyCallback, 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.editTextmap);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, item);
+        adapter = new ArrayAdapter<String>(this,  R.layout.item_seach, item);
         autoCompleteTextView.setThreshold(1);
         autoCompleteTextView.setAdapter(adapter);
         autoCompleteTextView.setOnItemSelectedListener(this);

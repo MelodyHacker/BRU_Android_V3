@@ -7,16 +7,26 @@ package com.example.tanon.mybru;
 public class Url {
 
 
-//    public String imgevent = "http://192.168.99.3/bru/upload/events/";
-//    public String jsonevent = "http://192.168.99.3/bru/JsonEvents.php";
-//    public String report = "http://192.168.99.3/bru/Report.php";
-//    public String jsonnews = "http://192.168.99.3/bru/JsonNews.php";
-//    public String imgnew = "http://192.168.99.3/bru/upload/news/";
-//    public String jsonporiline = "http://192.168.99.3/bru/JsonPorilines.php";
-//    public String jsonplace = "http://192.168.99.3/bru/JsonPlaces.php";
-//    public String jsontoilte = "http://192.168.99.3/bru/JsonToilets.php";
-//    public String jsonphone = "http://192.168.99.3/bru/JsonPhones.php";
-//    public String imgphone = "http://192.168.99.3/bru/upload/phones/";
+
+//http://206.189.239.164
+
+    public String imgevent = "http://206.189.239.164/bru/upload/events/";
+    public String jsonevent = "http://206.189.239.164/bru/JsonEvents.php";
+    public String report = "http://206.189.239.164/bru/Report.php";
+    public String jsonnews = "http://206.189.239.164/bru/JsonNews.php";
+    public String imgnew = "http://206.189.239.164/bru/upload/news/";
+    public String jsonporiline = "http://206.189.239.164/bru/JsonPorilines.php";
+    public String jsonplace = "http://206.189.239.164/bru/JsonPlaces.php";
+    public String jsontoilte = "http://206.189.239.164/bru/JsonToilets.php";
+    public String jsonphone = "http://206.189.239.164/bru/JsonPhones.php";
+    public String imgphone = "http://206.189.239.164/bru/upload/phones/";
+    public String token = "http://206.189.239.164/bru/Token.php";
+
+
+
+
+
+
 
 
 //
@@ -43,15 +53,15 @@ public class Url {
 //    public String jsonphone = "https://tanonexecutioner.000webhostapp.com/JsonPhones.php";
 //    public String imgphone = "https://tanonexecutioner.000webhostapp.com/upload/phones/";
 
-    public String imgevent = "https://tanon.000webhostapp.com/bru/upload/events/";
-    public String jsonevent = "https://tanon.000webhostapp.com/bru/JsonEvents.php";
-    public String report = "https://tanon.000webhostapp.com/bru/Report.php";
-    public String jsonnews = "https://tanon.000webhostapp.com/bru/JsonNews.php";
-    public String imgnew = "https://tanon.000webhostapp.com/bru/upload/news/";
-    public String jsonporiline = "https://tanon.000webhostapp.com/bru/JsonPorilines.php";
-    public String jsonplace = "https://tanon.000webhostapp.com/bru/JsonPlaces.php";
-    public String jsontoilte = "https://tanon.000webhostapp.com/bru/JsonToilets.php";
-    public String jsonphone = "https://tanon.000webhostapp.com/bru/JsonPhones.php";
-    public String imgphone = "https://tanon.000webhostapp.com/bru/upload/phones/";
-    public String token = "https://tanon.000webhostapp.com/bru/Token.php";
+//    public String imgevent = "https://tanon.000webhostapp.com/bru/upload/events/";
+//    public String jsonevent = "https://tanon.000webhostapp.com/bru/JsonEvents.php";
+//    public String report = "https://tanon.000webhostapp.com/bru/Report.php";
+//    public String jsonnews = "https://tanon.000webhostapp.com/bru/JsonNews.php";
+//    public String imgnew = "https://tanon.000webhostapp.com/bru/upload/news/";
+//    public String jsonporiline = "https://tanon.000webhostapp.com/bru/JsonPorilines.php";
+//    public String jsonplace = "https://tanon.000webhostapp.com/bru/JsonPlaces.php";
+//    public String jsontoilte = "https://tanon.000webhostapp.com/bru/JsonToilets.php";
+//    public String jsonphone = "https://tanon.000webhostapp.com/bru/JsonPhones.php";
+//    public String imgphone = "https://tanon.000webhostapp.com/bru/upload/phones/";
+//    public String token = "https://tanon.000webhostapp.com/bru/Token.php";
 }

@@ -15,6 +15,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,14 +50,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     JSONArray array;
     ViewFlipper viewFlipper;
     Url url = new Url();
-    String urlnew = url.imgnew;
     String img1, img2, img3;
     GoogleMap map;
     int zoom = 15;
     Double lat = 14.990395303361007, lng = 103.10022532939911;
     LatLng position = new LatLng(lat, lng);
     GoogleMap mMap;
-    String[] arMapak;
+    String[] ar_marker_off, ar_marker_event;
 
     @Override
     public void onBackPressed() {
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mProgressDialog = new ProgressDialog(MainActivity.this);
+        mProgressDialog.setMessage("Welcome To MyBRU Wait Pleas...........");
+        mProgressDialog.setIndeterminate(false);
         final ImageView into = (ImageView) findViewById(R.id.into);
         into.setImageResource(R.drawable.question);
         into.setOnClickListener(new View.OnClickListener() {
@@ -116,56 +124,97 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         viewFlipper = (ViewFlipper) findViewById(R.id.all_img_item);
         viewFlipper.startFlipping();
         viewFlipper.setFlipInterval(5000);
-/////////////////////////////////////////////////////////////////////////////////////////
-        new DownloadJSON().execute();
-        arrayList = new ArrayList<>();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new ReadJSON().execute(url.jsonnews);
-            }
-        });
-/////////////////////////////////////////////////////////////////////////////////////////////
+        loadImageNew();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapmain);
         mapFragment.getMapAsync(this);
 
     }
 
+    private void loadImageNew() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url.jsonnews,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("news");
+                            array = jsonArray;
+                            Random rand = new Random();
+                            int n = rand.nextInt(jsonArray.length());
+                            JSONObject productObject = jsonArray.getJSONObject(n);
+                            img1 = productObject.getString("news_image1");
+                            img2 = productObject.getString("news_image2");
+                            img3 = productObject.getString("news_image3");
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        if (img1 == null | img2 == null | img3 == null) {
+                            Intent intent = new Intent(MainActivity.this, NotInterNet.class);
+                            startActivity(intent);
+                        }
+                        ImageView imageView1 = (ImageView) findViewById(R.id.new11);
+                        Picasso.with(getApplicationContext()).load(url.imgnew + img1).into(imageView1);
+                        ImageView imageView2 = (ImageView) findViewById(R.id.new12);
+                        Picasso.with(getApplicationContext()).load(url.imgnew + img2).into(imageView2);
+                        ImageView imageView3 = (ImageView) findViewById(R.id.new13);
+                        Picasso.with(getApplicationContext()).load(url.imgnew + img3).into(imageView3);
+                        mProgressDialog.dismiss();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Marker marker;
         Bundle bundle = getIntent().getExtras();
-        String[] arMap = bundle.getStringArray("arrayMarkerPoriline");
-        arMapak = arMap;
+        ar_marker_off = bundle.getStringArray("arrayMarkerPoriline");
+        ar_marker_event = bundle.getStringArray("arrayMarkerEvent");
         final ImageView imgmap_show = (ImageView) findViewById(R.id.hide_map);
-        if (arMap.length == 0) {
-            //  LatLng position = new LatLng(14.990395303361007, 103.10022532939911);
+        if (ar_marker_off == null | ar_marker_event == null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
         } else {
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    anim(imgmap_show, "โปรดหลีกเลี่ยงเส้นทางที่มี Marker ดังต่อไปนี้");
+                    anim(imgmap_show, "โปรดหลีกเลี่ยงเส้นทางที่มี Marker สีม่วงและสามารถเข้าร่วมกิจกรรมใน Marker เขียว");
                 }
             }, 1000);
             Toast.makeText(MainActivity.this, "โปรดระวังเส้นทางดังต่อไปนี้",
                     Toast.LENGTH_LONG).show();
 /////////////////////////////////////////////////////////////////////
-            for (int x = 0; x < arMap.length; x++) {
-                String name = arMap[x];
-                Double lat = Double.parseDouble(arMap[x + 1]);
-                Double lng = Double.parseDouble(arMap[x + 2]);
+            for (int x = 0; x < ar_marker_off.length; x++) {
+                String name = ar_marker_off[x];
+                Double lat = Double.parseDouble(ar_marker_off[x + 1]);
+                Double lng = Double.parseDouble(ar_marker_off[x + 2]);
                 x = x + 2;
                 LatLng position = new LatLng(lat, lng);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
-                marker = mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
+                mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)).title(name));
             }
-            //  LatLng position = new LatLng(14.990395303361007, 103.10022532939911);
+            for (int x = 0; x < ar_marker_event.length; x++) {
+                String name = ar_marker_event[x];
+                Double lat = Double.parseDouble(ar_marker_event[x + 1]);
+                Double lng = Double.parseDouble(ar_marker_event[x + 2]);
+                x = x + 2;
+                LatLng position = new LatLng(lat, lng);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
+                mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
+                        .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
+            }
+/////////////////////////////////////////////////////////////////////
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -181,86 +230,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMyLocationEnabled(true);
     }
 
-    class ReadJSON extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            return readURL(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String content) {
-
-            try {
-                JSONObject jsonObject = new JSONObject(content);
-                JSONArray jsonArray = jsonObject.getJSONArray("news");
-                array = jsonArray;
-                Random rand = new Random();
-                int n = rand.nextInt(jsonArray.length());
-                JSONObject productObject = jsonArray.getJSONObject(n);
-                img1 = productObject.getString("news_image1");
-                img2 = productObject.getString("news_image2");
-                img3 = productObject.getString("news_image3");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if (img1 == null | img2 == null | img3 == null) {
-                Intent intent = new Intent(MainActivity.this, NotInterNet.class);
-                startActivity(intent);
-            }
-            ImageView imageView1 = (ImageView) findViewById(R.id.new11);
-            Picasso.with(getApplicationContext()).load(urlnew + img1).into(imageView1);
-            ImageView imageView2 = (ImageView) findViewById(R.id.new12);
-            Picasso.with(getApplicationContext()).load(urlnew + img2).into(imageView2);
-            ImageView imageView3 = (ImageView) findViewById(R.id.new13);
-            Picasso.with(getApplicationContext()).load(urlnew + img3).into(imageView3);
-
-            //stopprogress
-            mProgressDialog.dismiss();
-
-        }
-    }
-
-    private static String readURL(String theUrl) {
-        StringBuilder content = new StringBuilder();
-        try {
-
-            URL url = new URL(theUrl);
-            URLConnection urlConnection = url.openConnection();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line + "\n");
-            }
-            bufferedReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return content.toString();
-    }
-
-    private class DownloadJSON extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Create a progressdialog
-            mProgressDialog = new ProgressDialog(MainActivity.this);
-            // Set progressdialog message
-            mProgressDialog.setMessage("Welcome To MyBRU Wait Pleas...........");
-            mProgressDialog.setIndeterminate(false);
-            // Show progressdialog
-            // mProgressDialog.show();
-
-        }
-    }
 
     public void anim(final View v, String s) {
         Animation exitAnimation = AnimationUtils.loadAnimation(this, R.anim.side_top);
