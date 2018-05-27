@@ -12,10 +12,8 @@ import android.support.v7.app.AppCompatActivity;
  */
 
 public class CallPhone extends AppCompatActivity {
-    ProgressDialog mProgressDialog;
-    String call;
     int position;
-    String[] ar;
+    String contact;
     Url url = new Url();
 
     @Override
@@ -24,11 +22,7 @@ public class CallPhone extends AppCompatActivity {
         setContentView(R.layout.activity_wait);
         Bundle bundle = getIntent().getExtras();
         position = bundle.getInt("Position");
-        ar = bundle.getStringArray("Contact");
-        call = ar[position].toString();
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", call, null));
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", contact = bundle.getString("Contact"), null));
         startActivity(intent);
     }
 }
-
-

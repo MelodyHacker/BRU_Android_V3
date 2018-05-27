@@ -36,7 +36,7 @@ public class Report extends Activity {
         btn_sent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (editText.toString() == "") {
+                if (editText.getText().toString().matches("")) {
                     Toast.makeText(Report.this, "กรุณาใส่ข้อคาวม",
                             Toast.LENGTH_LONG).show();
                 } else {
