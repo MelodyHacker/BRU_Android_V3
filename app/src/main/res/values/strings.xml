@@ -14,9 +14,18 @@
     <string name="q">แนะนำการใช้งาน</string>
     <string name="title_activity_maps_sctivity">Map</string>
     <string name="title_activity_maps2">Map</string>
-    <string name="hit_event">Name????</string>
-    <string name="hit_place">Place????</string>
-    <string name="hit_phone">Name ????</string>
+    <string name="hit_event">Name</string>
+    <string name="hit_place">Place</string>
+    <string name="hit_phone">Name</string>
     <string name="title_activity_test">Map</string>
     <string name="report">Report.......</string>
+    <string name="welcome">Welcome to BRU App</string>
+    <string name="closs">โปรดระวังเส้นทางต่อไปนี้</string>
+    <string name="wrong">Network has trouble connecting. :</string>
+    <string name="get_menu">คุณได้กดเลือก  :</string>
+    <string name="toilet">ห้องนำ้</string>
+    <string name="not_internet">เชื่อมต่ออินเตอร์เน็ตมีปัญหา ลองอีกครั้ง หรือระบบมีปัญหาโปรดรายงานปัญหาจากปุ่ม Report</string>
+    <string name="ty">ขอบคุณที่รายงานปัญหา</string>
+    <string name="load">กำลังโหลดข้อมูล........</string>
+    <string name="fill">กรุณากรอกข้อความ</string>
 </resources>

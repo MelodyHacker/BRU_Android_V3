@@ -25,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     LatLng position = new LatLng(lat, lng);
     GoogleMap mMap;
     String[] ar_marker_off, ar_marker_event;
+    String wel, start_closs;
 
     @Override
     public void onBackPressed() {
@@ -68,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mProgressDialog = new ProgressDialog(MainActivity.this);
-        mProgressDialog.setMessage("Welcome To MyBRU Wait Pleas...........");
+        wel = getString(R.string.welcome);
+        mProgressDialog.setMessage(wel);
         mProgressDialog.setIndeterminate(false);
         final ImageView into = (ImageView) findViewById(R.id.into);
         into.setImageResource(R.drawable.question);
@@ -188,11 +191,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    anim(imgmap_show, "โปรดหลีกเลี่ยงเส้นทางที่มี Marker สีม่วงและสามารถเข้าร่วมกิจกรรมใน Marker เขียว");
+                    anim(imgmap_show, start_closs);
                 }
             }, 1000);
-            Toast.makeText(MainActivity.this, "โปรดระวังเส้นทางดังต่อไปนี้",
-                    Toast.LENGTH_LONG).show();
+            start_closs=getString(R.string.closs);
+
 /////////////////////////////////////////////////////////////////////
             for (int x = 0; x < ar_marker_off.length; x++) {
                 String name = ar_marker_off[x];
@@ -200,9 +203,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Double lng = Double.parseDouble(ar_marker_off[x + 2]);
                 x = x + 2;
                 LatLng position = new LatLng(lat, lng);
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.cancel);
+                MarkerOptions markerOptions = new MarkerOptions().position(position)
+                        .title(name)
+                        .icon(icon);
+
+                mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
-                mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)).title(name));
+//                mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
+//                        .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)).title(name));
             }
             for (int x = 0; x < ar_marker_event.length; x++) {
                 String name = ar_marker_event[x];
@@ -211,8 +220,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 x = x + 2;
                 LatLng position = new LatLng(lat, lng);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
-                mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.location);
+                MarkerOptions markerOptions = new MarkerOptions().position(position)
+                        .title(name)
+                        .icon(icon);
+
+                mMap.addMarker(markerOptions);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
+//                mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
+//                        .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
             }
 /////////////////////////////////////////////////////////////////////
         }

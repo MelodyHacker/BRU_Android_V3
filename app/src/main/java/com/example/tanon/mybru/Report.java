@@ -37,7 +37,8 @@ public class Report extends Activity {
             @Override
             public void onClick(View view) {
                 if (editText.getText().toString().matches("")) {
-                    Toast.makeText(Report.this, "กรุณาใส่ข้อคาวม",
+                    String fill=getString(R.string.fill);
+                    Toast.makeText(Report.this, fill,
                             Toast.LENGTH_LONG).show();
                 } else {
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url.report, new Response.Listener<String>() {
@@ -57,7 +58,7 @@ public class Report extends Activity {
                         }
                     };
                     requestQueue.add(stringRequest);
-                    Toast.makeText(Report.this, "ขอบคุณที่รายงานปัญหาเราจะทำไปแก้ไข",
+                    Toast.makeText(Report.this, getString(R.string.ty),
                             Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Report.this, MarkerOff.class);
                     startActivity(intent);

@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,13 +38,15 @@ public class MarkerOff extends AppCompatActivity {
     RequestQueue requestQueue;
     Url url = new Url();
     String[] ar_marker_off, ar_marker_event;
+    String wel, wrong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
+        wel = getString(R.string.welcome);
         mProgressDialog = new ProgressDialog(MarkerOff.this);
-        mProgressDialog.setMessage("ยินดีต้อนรับกำลังโหลดข้อมูล......");
+        mProgressDialog.setMessage(wel);
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
 
@@ -93,7 +96,8 @@ public class MarkerOff extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        wrong = getString(R.string.wrong);
+                        Toast.makeText(getApplicationContext(), wrong + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());
@@ -138,7 +142,7 @@ public class MarkerOff extends AppCompatActivity {
     }
 
     private void sendToken() {
-        //  FirebaseMessaging.getInstance().subscribeToTopic("news");
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url.token, new Response.Listener<String>() {
             @Override

@@ -30,10 +30,12 @@ public class NotInterNet extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NotInterNet.this, Report.class);
-                Toast.makeText(NotInterNet.this, "ขอบคุณที่รายงานปัญหา", Toast.LENGTH_LONG).show();
+                String tyvm=getString(R.string.ty);
+                Toast.makeText(NotInterNet.this, tyvm, Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
         });
-        Toast.makeText(NotInterNet.this, "เชื่อมต่ออินเตอร์เน็ตมีปัญหา ลองอีกครั้ง หรือระบบมีปัญหาโปรดรายงานปัญหาจากปุ่ม Report", Toast.LENGTH_LONG).show();
+        String not_internet=getString(R.string.not_internet);
+        Toast.makeText(NotInterNet.this, not_internet, Toast.LENGTH_LONG).show();
     }
 }

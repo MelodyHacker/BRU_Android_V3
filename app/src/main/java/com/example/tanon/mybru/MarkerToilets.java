@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,95 +36,52 @@ public class MarkerToilets extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
-
-
-        new MarkerToilets.DownloadJSON().execute();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //avd  10.0.2.2.json.php
-                new MarkerToilets.ReadJSON().execute(url.jsontoilte);
-            }
-        });
-
+        String load=getString(R.string.load);
+        mProgressDialog = new ProgressDialog(MarkerToilets.this);
+        mProgressDialog.setMessage(load);
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.show();
+        load();
     }
 
+    private void load() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url.jsontoilte,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("toilets");
+                            int x = 0;
+                            ar = new String[jsonArray.length() * 3];
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject MarkObject = jsonArray.getJSONObject(i);
+                                ar[x] = MarkObject.getString("toilet_name");
+                                ar[x + 1] = MarkObject.getString("toilet_lat");
+                                ar[x + 2] = MarkObject.getString("toilet_long");
+                                x = x + 3;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        mProgressDialog.dismiss();
+                        ///////////////////////////////////////////////////////////////
+                        Intent intent = new Intent(MarkerToilets.this, MapsToilet.class);
+                        intent.putExtra("arrayMarkerToilet", ar);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String wrong=getString(R.string.wrong);
+                        Toast.makeText(getApplicationContext(), wrong+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());
+        requestQueue.add(stringRequest);
 
-    class ReadJSON extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            return readURL(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String content) {
-            try {
-                JSONObject jsonObject = new JSONObject(content);
-                JSONArray jsonArray = jsonObject.getJSONArray("toilets");
-                int x = 0;
-                ar = new String[jsonArray.length() * 3];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject MarkObject = jsonArray.getJSONObject(i);
-                    ar[x] = MarkObject.getString("toilet_name");
-                    ar[x + 1] = MarkObject.getString("toilet_lat");
-                    ar[x + 2] = MarkObject.getString("toilet_long");
-                    x = x + 3;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Toast.makeText(MarkerToilets.this, "โหลดแผนที่เรียบร้อย",
-                    Toast.LENGTH_LONG).show();
-            mProgressDialog.dismiss();
-            ///////////////////////////////////////////////////////////////
-            Intent intent = new Intent(MarkerToilets.this, MapsToilet.class);
-            intent.putExtra("arrayMarkerToilet", ar);
-            startActivity(intent);
-        }
     }
-
-
-    private static String readURL(String theUrl) {
-        StringBuilder content = new StringBuilder();
-        try {
-
-            URL url = new URL(theUrl);
-            URLConnection urlConnection = url.openConnection();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line + "\n");
-            }
-            bufferedReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return content.toString();
-    }
-
-    private class DownloadJSON extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Create a progressdialog
-            mProgressDialog = new ProgressDialog(MarkerToilets.this);
-            // Set progressdialog message
-            mProgressDialog.setMessage("โปรดรอกำลังโหลดแผนที่.......");
-            mProgressDialog.setIndeterminate(false);
-            // Show progressdialog
-            mProgressDialog.show();
-
-        }
-    }
-
 
 }
 

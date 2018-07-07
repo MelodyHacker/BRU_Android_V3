@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,86 +36,54 @@ public class MarkerPlaces extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
-        new MarkerPlaces.DownloadJSON().execute();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //avd  10.0.2.2.json.php
-                new MarkerPlaces.ReadJSON().execute(url.jsonplace);
-            }
-        });
+        mProgressDialog = new ProgressDialog(MarkerPlaces.this);
+        mProgressDialog.setMessage("โปรดรอกำลังโหลดแผนที่...");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.show();
         Toast.makeText(MarkerPlaces.this, "สถานที่",
                 Toast.LENGTH_LONG).show();
+        load();
     }
 
-    class ReadJSON extends AsyncTask<String, Integer, String> {
+    private void load() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url.jsonplace,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("places");
+                            int x = 0;
+                            ar = new String[jsonArray.length() * 3];
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject MarkObject = jsonArray.getJSONObject(i);
+                                ar[x] = MarkObject.getString("place_name");
+                                ar[x + 1] = MarkObject.getString("lat_location");
+                                ar[x + 2] = MarkObject.getString("long_location");
+                                x = x + 3;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(MarkerPlaces.this, "โหลดข้อมูลเรียบร้อย",
+                                Toast.LENGTH_LONG).show();
+                        mProgressDialog.dismiss();
+                        ///////////////////////////////////////////////////////////////
+                        Intent intent = new Intent(MarkerPlaces.this, MapPlaces.class);
+                        intent.putExtra("arrayMarker", ar);
+                        startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "Network has trouble connecting. :"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());
+        requestQueue.add(stringRequest);
 
-        @Override
-        protected String doInBackground(String... params) {
-            return readURL(params[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String content) {
-            try {
-                JSONObject jsonObject = new JSONObject(content);
-                JSONArray jsonArray = jsonObject.getJSONArray("places");
-                int x = 0;
-                ar = new String[jsonArray.length() * 3];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject MarkObject = jsonArray.getJSONObject(i);
-                    ar[x] = MarkObject.getString("place_name");
-                    ar[x + 1] = MarkObject.getString("lat_location");
-                    ar[x + 2] = MarkObject.getString("long_location");
-                    x = x + 3;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Toast.makeText(MarkerPlaces.this, "โหลดข้อมูลเรียบร้อย",
-                    Toast.LENGTH_LONG).show();
-            mProgressDialog.dismiss();
-            ///////////////////////////////////////////////////////////////
-            Intent intent = new Intent(MarkerPlaces.this, MapPlaces.class);
-            intent.putExtra("arrayMarker", ar);
-            startActivity(intent);
-        }
     }
-
-
-    private static String readURL(String theUrl) {
-        StringBuilder content = new StringBuilder();
-        try {
-            URL url = new URL(theUrl);
-            URLConnection urlConnection = url.openConnection();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                content.append(line + "\n");
-            }
-            bufferedReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return content.toString();
-    }
-
-    private class DownloadJSON extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog = new ProgressDialog(MarkerPlaces.this);
-            mProgressDialog.setMessage("โปรดรอกำลังโหลดแผนที่...");
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();
-        }
-    }
-
 
 }
 

@@ -57,10 +57,11 @@ public class Phone extends AppCompatActivity implements AdapterView.OnItemClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view_all);
+        String load=getString(R.string.load);
         lv = (ListView) findViewById(R.id.json_Listview);
         arrayList = new ArrayList<>();
         mProgressDialog = new ProgressDialog(Phone.this);
-        mProgressDialog.setMessage("กำลังโหลดข้อมูลติดต่อ........");
+        mProgressDialog.setMessage(load);
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
         loadNumberPhone();
@@ -149,8 +150,6 @@ public class Phone extends AppCompatActivity implements AdapterView.OnItemClickL
                         lv.setAdapter(adapter);
                         seach();
                         mProgressDialog.dismiss();
-                        Toast.makeText(Phone.this, "โหลดข้อมูลติดต่อเรียบร้อย",
-                                Toast.LENGTH_LONG).show();
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

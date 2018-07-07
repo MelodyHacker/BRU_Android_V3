@@ -19,6 +19,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -63,17 +65,7 @@ public class MapPlaces extends AppCompatActivity implements OnMapReadyCallback, 
         arMapak = arMap;
         item = new String[arMap.length / 3];
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
+
 ///////////////////////////////////////////////////
         int i = 0;
         for (int x = 0; x < arMap.length; x++) {
@@ -84,7 +76,13 @@ public class MapPlaces extends AppCompatActivity implements OnMapReadyCallback, 
             x = x + 2;
             LatLng position = new LatLng(lat, lng);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
-            marker = mMap.addMarker(new MarkerOptions().position(position).title(name));
+            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.flag);
+            MarkerOptions markerOptions = new MarkerOptions().position(position)
+                    .title(name)
+                    .icon(icon);
+
+            mMap.addMarker(markerOptions);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
             i++;
         }
         LatLng position = new LatLng(14.990395303361007, 103.10022532939911);
@@ -128,6 +126,18 @@ public class MapPlaces extends AppCompatActivity implements OnMapReadyCallback, 
                 }
             }
         });
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
     }
 
     @Override
@@ -144,7 +154,8 @@ public class MapPlaces extends AppCompatActivity implements OnMapReadyCallback, 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getBaseContext(), "คุณได้กดเลือก : " + parent.getItemAtPosition(position),
+        String get=getString(R.string.get_menu);
+        Toast.makeText(getBaseContext(),get + parent.getItemAtPosition(position),
                 Toast.LENGTH_LONG).show();
 
     }

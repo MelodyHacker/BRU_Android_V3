@@ -20,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -52,7 +53,8 @@ public class MapsToilet extends AppCompatActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Toast.makeText(MapsToilet.this, "ห้องน้ำ",
+        String toilet=getString(R.string.toilet);
+        Toast.makeText(MapsToilet.this, toilet,
                 Toast.LENGTH_LONG).show();
 
     }
@@ -80,8 +82,14 @@ public class MapsToilet extends AppCompatActivity implements OnMapReadyCallback,
             x = x + 2;
             LatLng position = new LatLng(lat, lng);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
-            marker = mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
-                    .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).title(name));
+            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.toilet);
+            MarkerOptions markerOptions = new MarkerOptions().position(position)
+                    .title(name)
+                    .icon(icon);
+
+            mMap.addMarker(markerOptions);
+            //            marker = mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
+//                    .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).title(name));
             i++;
         }
         LatLng position = new LatLng(14.990395303361007, 103.10022532939911);
@@ -152,7 +160,8 @@ public class MapsToilet extends AppCompatActivity implements OnMapReadyCallback,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getBaseContext(), "คุณได้กดเลือก : " + parent.getItemAtPosition(position),
+        String get=getString(R.string.get_menu);
+        Toast.makeText(getBaseContext(), get + parent.getItemAtPosition(position),
                 Toast.LENGTH_LONG).show();
 
     }
