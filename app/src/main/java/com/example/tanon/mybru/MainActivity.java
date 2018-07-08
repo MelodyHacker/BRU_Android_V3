@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Into.class);
-               startActivity(intent);
+                startActivity(intent);
             }
         });
 
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.wrong)+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong) + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -180,15 +180,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ar_marker_event = bundle.getStringArray("arrayMarkerEvent");
         final ImageView imgmap_show = (ImageView) findViewById(R.id.hide_map);
         if (ar_marker_off == null | ar_marker_event == null) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
+            Intent intent = new Intent(MainActivity.this, NotInterNet.class);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(), getString(R.string.wrong), Toast.LENGTH_SHORT).show();
+
         } else {
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    anim(imgmap_show, getString(R.string.closs));
-                }
-            }, 1000);
 /////////////////////////////////////////////////////////////////////
             for (int x = 0; x < ar_marker_off.length; x++) {
                 String name = ar_marker_off[x];
@@ -202,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .icon(icon);
 
                 mMap.addMarker(markerOptions);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
 //                mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
 //                        .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)).title(name));
             }
@@ -219,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .icon(icon);
 
                 mMap.addMarker(markerOptions);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
+//                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
 //                mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
 //                        .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
             }
@@ -239,16 +235,4 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMyLocationEnabled(true);
     }
 
-
-    public void anim(final View v, String s) {
-        Animation exitAnimation = AnimationUtils.loadAnimation(this, R.anim.side_top);
-        FancyShowCaseView fancy;
-        fancy = new FancyShowCaseView.Builder(this)
-                .focusOn(v)
-                .title(s).enterAnimation(exitAnimation)
-                .enterAnimation(exitAnimation)
-                .build();
-        fancy.show();
-//        .enterAnimation(exitAnimation)
-    }
 }

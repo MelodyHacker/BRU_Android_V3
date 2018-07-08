@@ -80,7 +80,7 @@ public class MarkerOff extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if (ar_marker_event == null) {
+                        if (ar_marker_event == null|ar_marker_off==null) {
                             Intent intent = new Intent(MarkerOff.this, NotInterNet.class);
                             startActivity(intent);
                         } else {
