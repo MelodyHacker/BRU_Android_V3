@@ -22,7 +22,7 @@
     <string name="closs">โปรดระวังเส้นทางต่อไปนี้</string>
     <string name="wrong">อินเตอร์เน็ตของท่านมีปัญหา. :</string>
     <string name="get_menu">คุณได้กดเลือก  :</string>
-    <string name="toilet">ห้องนำ้</string>
+    <string name="toilet">ห้องน้ำ</string>
     <string name="not_internet">เชื่อมต่ออินเตอร์เน็ตมีปัญหา ลองอีกครั้ง หรือระบบมีปัญหาโปรดรายงานปัญหาจากปุ่ม Report</string>
     <string name="ty">ขอบคุณที่รายงานปัญหา</string>
     <string name="load">กำลังโหลดข้อมูล........</string>
