@@ -36,9 +36,8 @@ public class MarkerToilets extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
-        String load=getString(R.string.load);
         mProgressDialog = new ProgressDialog(MarkerToilets.this);
-        mProgressDialog.setMessage(load);
+        mProgressDialog.setMessage(getString(R.string.load));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
         load();
@@ -74,8 +73,7 @@ public class MarkerToilets extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        String wrong=getString(R.string.wrong);
-                        Toast.makeText(getApplicationContext(), wrong+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong)+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());

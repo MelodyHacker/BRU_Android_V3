@@ -72,7 +72,7 @@ public class EventAll extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(EventAll.this, "เลือกที่ปุ่มเพื่อนำทางที่อยู่ทางด้านล่างขวา",
+        Toast.makeText(EventAll.this, getString(R.string.guide_direction),
                 Toast.LENGTH_LONG).show();
     }
 }

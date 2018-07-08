@@ -7,7 +7,6 @@ package com.example.tanon.mybru;
 public class Url {
 
 
-
 //http://206.189.239.164
 
     public String imgevent = "http://206.189.239.164/bru/upload/events/";
@@ -21,12 +20,6 @@ public class Url {
     public String jsonphone = "http://206.189.239.164/bru/JsonPhones.php";
     public String imgphone = "http://206.189.239.164/bru/upload/phones/";
     public String token = "http://206.189.239.164/bru/Token.php";
-
-
-
-
-
-
 
 
 //

@@ -38,15 +38,14 @@ public class MarkerOff extends AppCompatActivity {
     RequestQueue requestQueue;
     Url url = new Url();
     String[] ar_marker_off, ar_marker_event;
-    String wel, wrong;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
-        wel = getString(R.string.welcome);
         mProgressDialog = new ProgressDialog(MarkerOff.this);
-        mProgressDialog.setMessage(wel);
+        mProgressDialog.setMessage(getString(R.string.welcome));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
 
@@ -96,8 +95,7 @@ public class MarkerOff extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        wrong = getString(R.string.wrong);
-                        Toast.makeText(getApplicationContext(), wrong + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong) + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());
@@ -133,7 +131,7 @@ public class MarkerOff extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong) + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());

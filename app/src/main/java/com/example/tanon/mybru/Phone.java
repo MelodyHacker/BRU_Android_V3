@@ -57,11 +57,10 @@ public class Phone extends AppCompatActivity implements AdapterView.OnItemClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view_all);
-        String load=getString(R.string.load);
         lv = (ListView) findViewById(R.id.json_Listview);
         arrayList = new ArrayList<>();
         mProgressDialog = new ProgressDialog(Phone.this);
-        mProgressDialog.setMessage(load);
+        mProgressDialog.setMessage(getString(R.string.load));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
         loadNumberPhone();
@@ -111,7 +110,7 @@ public class Phone extends AppCompatActivity implements AdapterView.OnItemClickL
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong)+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());
@@ -167,7 +166,7 @@ public class Phone extends AppCompatActivity implements AdapterView.OnItemClickL
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong)+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());

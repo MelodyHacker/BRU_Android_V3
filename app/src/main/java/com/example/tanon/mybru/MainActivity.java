@@ -46,19 +46,16 @@ import java.util.Random;
 import me.toptas.fancyshowcase.FancyShowCaseView;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-    ArrayList<GetSetImageMain> arrayList;
     ProgressDialog mProgressDialog;
     JSONArray array;
     ViewFlipper viewFlipper;
     Url url = new Url();
     String img1, img2, img3;
-    GoogleMap map;
     int zoom = 15;
     Double lat = 14.990395303361007, lng = 103.10022532939911;
     LatLng position = new LatLng(lat, lng);
     GoogleMap mMap;
     String[] ar_marker_off, ar_marker_event;
-    String wel, start_closs;
 
     @Override
     public void onBackPressed() {
@@ -70,8 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mProgressDialog = new ProgressDialog(MainActivity.this);
-        wel = getString(R.string.welcome);
-        mProgressDialog.setMessage(wel);
+        mProgressDialog.setMessage(getString(R.string.welcome));
         mProgressDialog.setIndeterminate(false);
         final ImageView into = (ImageView) findViewById(R.id.into);
         into.setImageResource(R.drawable.question);
@@ -79,8 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Into.class);
-//                Intent intent = new Intent(MainActivity.this, Token.class);
-                startActivity(intent);
+               startActivity(intent);
             }
         });
 
@@ -169,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong)+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -191,11 +186,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    anim(imgmap_show, start_closs);
+                    anim(imgmap_show, getString(R.string.closs));
                 }
             }, 1000);
-            start_closs=getString(R.string.closs);
-
 /////////////////////////////////////////////////////////////////////
             for (int x = 0; x < ar_marker_off.length; x++) {
                 String name = ar_marker_off[x];

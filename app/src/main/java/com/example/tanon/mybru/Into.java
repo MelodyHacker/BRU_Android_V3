@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,21 +25,19 @@ public class Into extends AppCompatActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapmain);
         mapFragment.getMapAsync(this);
-        Toast.makeText(Into.this, "โปรดระวังเส้นทางดังต่อไปนี้",
-                Toast.LENGTH_LONG).show();
         final ImageView imgskip = (ImageView) findViewById(R.id.into);
         final ImageView imgmap_show = (ImageView) findViewById(R.id.hide_map);
         imgmap_show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                anim(imgmap_show, "เห็นแผนที่นี้ไหมละวังเส้นทางที่ถูกปิดกันด้วยนะ");
+                anim(imgmap_show,  getString(R.string.into_care_full));
             }
         });
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                anim(imgskip, "หากเข้าใจแล้วกดปุ่มนี้เพื่อกลับไปยังหน้าหลัก");
+                anim(imgskip, getString(R.string.into_back));
             }
         }, 1000);
         imgskip.setImageResource(R.drawable.arrow);
@@ -55,35 +52,35 @@ public class Into extends AppCompatActivity implements OnMapReadyCallback {
         imgreport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anim(imgreport, "คุณสามารถรายงานข้อผิดพลาดของระบบหรือข้อมูลไปยังผู้ดูแลระบบได้จากปุ้มนี้");
+                anim(imgreport, getString(R.string.into_report));
             }
         });
         final ImageView imgevent = (ImageView) findViewById(R.id.event);
         imgevent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anim(imgevent, "คุณสามารถค้นหางานหรือสถานที่จัดงานขึ้นได้จากตรงนี้..และหากต้องการให้แสดงรายระเอียด หรือให้เรานำทางโปรดกดเลือกที่รายการและกดปุ่มมุมล่างขวา ");
+                anim(imgevent, getString(R.string.into_event));
             }
         });
         final ImageView imgmap = (ImageView) findViewById(R.id.mapimg);
         imgmap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anim(imgmap, "สามารถหาสถานที่ต่าง ๆ ได้จากตรงนี้นะจ้ะ..และอย่าลืมหากต้องการให้เรานำทางเลือกสถานทีและ กดเลือกที่ Markerก่อนแล้วกดปุ่มมุมล่างขวาเพื่อนำทาง");
+                anim(imgmap, getString(R.string.into_place));
             }
         });
         final ImageView imgtoilet = (ImageView) findViewById(R.id.toilet);
         imgtoilet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anim(imgtoilet, "ปวดเบาใช่ไหม หรือปวดหนักปุ่มนี้ซิ..และอย่าลืมหากต้องการให้เรานำทางเลือกสถานทีและกดเลือกที่ Marker่ก่อนแล้วกดปุ่มมุมล่างขวาเพื่อนำทาง");
+                anim(imgtoilet, getString(R.string.into_toilet));
             }
         });
         final ImageView imgphone = (ImageView) findViewById(R.id.callphone);
         imgphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                anim(imgphone, "คุณสามารถหาเบอร์โทรติดต่อได้จาก List ของปุ้มนี้และกดเลือกเพื่อโทรออก");
+                anim(imgphone, getString(R.string.into_phone));
             }
         });
 

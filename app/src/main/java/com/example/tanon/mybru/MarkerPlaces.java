@@ -37,11 +37,9 @@ public class MarkerPlaces extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
         mProgressDialog = new ProgressDialog(MarkerPlaces.this);
-        mProgressDialog.setMessage("โปรดรอกำลังโหลดแผนที่...");
+        mProgressDialog.setMessage(getString(R.string.load));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
-        Toast.makeText(MarkerPlaces.this, "สถานที่",
-                Toast.LENGTH_LONG).show();
         load();
     }
 
@@ -65,8 +63,6 @@ public class MarkerPlaces extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(MarkerPlaces.this, "โหลดข้อมูลเรียบร้อย",
-                                Toast.LENGTH_LONG).show();
                         mProgressDialog.dismiss();
                         ///////////////////////////////////////////////////////////////
                         Intent intent = new Intent(MarkerPlaces.this, MapPlaces.class);
@@ -77,7 +73,7 @@ public class MarkerPlaces extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), "Network has trouble connecting. :"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong)+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());

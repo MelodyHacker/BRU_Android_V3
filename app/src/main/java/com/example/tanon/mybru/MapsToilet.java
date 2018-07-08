@@ -53,8 +53,7 @@ public class MapsToilet extends AppCompatActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        String toilet=getString(R.string.toilet);
-        Toast.makeText(MapsToilet.this, toilet,
+        Toast.makeText(MapsToilet.this, getString(R.string.toilet),
                 Toast.LENGTH_LONG).show();
 
     }
@@ -160,8 +159,7 @@ public class MapsToilet extends AppCompatActivity implements OnMapReadyCallback,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String get=getString(R.string.get_menu);
-        Toast.makeText(getBaseContext(), get + parent.getItemAtPosition(position),
+        Toast.makeText(getBaseContext(), getString(R.string.get_menu) + parent.getItemAtPosition(position),
                 Toast.LENGTH_LONG).show();
 
     }

@@ -63,7 +63,6 @@
         <activity android:name=".NotInterNet" />
         <activity android:name=".Into" />
         <activity android:name=".Report" />
-        <activity android:name=".Token"/>
 
         <activity
             android:name=".MapPlaces"
@@ -80,11 +79,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
-
-        <activity
-            android:name=".test"
-            android:label="@string/title_activity_test"></activity>
 
         <service
             android:name=".MessagingService">

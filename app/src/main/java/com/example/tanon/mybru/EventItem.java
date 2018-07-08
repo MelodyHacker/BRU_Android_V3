@@ -45,8 +45,7 @@ public class EventItem extends AppCompatActivity implements AdapterView.OnItemCl
     ArrayList<GetSetItem> arrayListsend;
     ListView lv;
     ProgressDialog mProgressDialog;
-    String[] arraysend;
-    String[] arrayseach;
+    String[] arraysend,arrayseach;
     String contenteq;
     AutoCompleteTextView autoCompleteTextView = null;
     ArrayAdapter<String> adapterseach;
@@ -57,7 +56,7 @@ public class EventItem extends AppCompatActivity implements AdapterView.OnItemCl
         setContentView(R.layout.list_view_all);
         lv=(ListView)findViewById(R.id.json_Listview) ;
         mProgressDialog = new ProgressDialog(EventItem.this);
-        mProgressDialog.setMessage("กำลังโหลดงานที่จัดขึ้น.......");
+        mProgressDialog.setMessage(getString(R.string.load));
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.show();
         arrayListset = new ArrayList<>();
@@ -162,7 +161,7 @@ public class EventItem extends AppCompatActivity implements AdapterView.OnItemCl
                                         getAllItemEvent(c);
                                         break;
                                     } else if (c == arrayListseach.size() - 1) {
-                                        Toast.makeText(EventItem.this, "ไม่พบข้อมูลที่ค้นหา", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(EventItem.this, getString(R.string.not_found), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -173,7 +172,7 @@ public class EventItem extends AppCompatActivity implements AdapterView.OnItemCl
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.wrong)+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(this.getApplication());

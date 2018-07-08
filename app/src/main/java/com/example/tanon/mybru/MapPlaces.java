@@ -154,8 +154,7 @@ public class MapPlaces extends AppCompatActivity implements OnMapReadyCallback, 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String get=getString(R.string.get_menu);
-        Toast.makeText(getBaseContext(),get + parent.getItemAtPosition(position),
+        Toast.makeText(getBaseContext(),getString(R.string.get_menu) + parent.getItemAtPosition(position),
                 Toast.LENGTH_LONG).show();
 
     }

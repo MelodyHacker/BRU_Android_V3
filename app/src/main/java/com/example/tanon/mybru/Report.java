@@ -37,8 +37,7 @@ public class Report extends Activity {
             @Override
             public void onClick(View view) {
                 if (editText.getText().toString().matches("")) {
-                    String fill=getString(R.string.fill);
-                    Toast.makeText(Report.this, fill,
+                    Toast.makeText(Report.this, getString(R.string.fill),
                             Toast.LENGTH_LONG).show();
                 } else {
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url.report, new Response.Listener<String>() {
