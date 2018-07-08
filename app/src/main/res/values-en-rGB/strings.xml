@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BRU</string>
+    <string name="name">Name:</string>
+    <string name="datestart">Start date:</string>
+    <string name="dateend">End date:</string>
+    <string name="description">Description:</string>
+    <string name="lat">Lat Location:</string>
+    <string name="lng">Long Location:</string>
+    <string name="place">Place:</string>
+    <string name="title_activity_maps">BRU</string>
+    <string name="number">Tel:</string>
+    <string name="title_activity_main_map">Map</string>
+    <string name="skip">Skip</string>
+    <string name="q">Guide App</string>
+    <string name="title_activity_maps_sctivity">Map</string>
+    <string name="title_activity_maps2">Map</string>
+    <string name="hit_event">Name Event</string>
+    <string name="hit_place">Name Place</string>
+    <string name="hit_phone">Name Tel</string>
+    <string name="title_activity_test">Map</string>
+    <string name="closs">Be careful of the following paths.</string>
+    <string name="wrong">Your internet has problems. :</string>
+    <string name="get_menu">You select:</string>
+    <string name="toilet">Toilet</string>
+    <string name="not_internet">Internet connection has crash, try again, or the system has a problem. Please report the problem from the Report button.</string>
+    <string name="ty">Thanks for reporting the problem.</string>
+    <string name="load">Loading........</string>
+    <string name="fill">Please enter a message.</string>
+    <string name="guide_direction">To navigate, press the navigation button at the bottom right corner.</string>
+    <string name="not_found">Not Found</string>
+    <string name="into_care_full">Please be aware of the following routes and see this map.</string>
+    <string name="into_back">If so, press this button to return to the main page.</string>
+    <string name="into_report">You can report system errors or information to the administrator from this tab.</string>
+    <string name="into_event">You can search for jobs or venues from here. Or, let us navigate, press the item and press the bottom right corner.</string>
+    <string name="into_place">And if you want us to navigate, select the location and press the Marker first, then press the bottom right corner to navigate.</string>
+    <string name="into_toilet">Looking for a toilet? And if you want us to navigate, select a location and press. Marker first, then press the bottom right corner to navigate.</string>
+    <string name="into_phone">You can find the contact from this list and press to dial.</string>
+    <string name="report">Report........</string>
+    <string name="welcome">Welcome to BRU app.</string>
+</resources>

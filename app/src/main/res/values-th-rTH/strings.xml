@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">มรภ บร</string>
     <string name="name">ชื่อ:</string>
@@ -37,5 +38,4 @@
     <string name="into_phone">คุณสามารถหาเบอร์โทรติดต่อได้จาก รายการ ของปุ้มนี้และกดเลือกเพื่อโทรออก</string>
     <string name="report">รายงานปัญหา........</string>
     <string name="welcome">ยินดีต้อนรับสู่แอพของเรา</string>
-
 </resources>
