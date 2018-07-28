@@ -42,6 +42,7 @@ public class MarkerOff extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(null);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
         mProgressDialog = new ProgressDialog(MarkerOff.this);

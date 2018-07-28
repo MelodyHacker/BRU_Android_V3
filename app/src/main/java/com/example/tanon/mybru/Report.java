@@ -25,6 +25,7 @@ import java.util.Map;
 public class Report extends Activity {
     RequestQueue requestQueue;
     Url url = new Url();
+    Date date = new Date();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class Report extends Activity {
                         @Override
                         protected Map<String, String> getParams() throws AbstractMethodError {
                             Map<String, String> parameters = new HashMap<String, String>();
-                            parameters.put("report_name", editText.getText().toString());
+                            parameters.put("report_name", date.dateToDay()+" "+editText.getText().toString());
                             return parameters;
                         }
                     };

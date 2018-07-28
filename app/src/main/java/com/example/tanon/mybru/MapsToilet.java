@@ -60,6 +60,7 @@ public class MapsToilet extends AppCompatActivity implements OnMapReadyCallback,
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        final BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.toilet);
         mMap = googleMap;
         Marker marker;
         Bundle bundle = getIntent().getExtras();
@@ -81,7 +82,6 @@ public class MapsToilet extends AppCompatActivity implements OnMapReadyCallback,
             x = x + 2;
             LatLng position = new LatLng(lat, lng);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
-            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.toilet);
             MarkerOptions markerOptions = new MarkerOptions().position(position)
                     .title(name)
                     .icon(icon);
@@ -125,8 +125,10 @@ public class MapsToilet extends AppCompatActivity implements OnMapReadyCallback,
                         lng = Double.parseDouble(arMapak[c + 2]);
                         LatLng position = new LatLng(lat, lng);
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
-                        marker = mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).title(arMapak[c]));
+                        marker = mMap.addMarker(new MarkerOptions()
+                                .position(position)
+                                .icon(icon)
+                                .title(arMapak[c]));
                         marker.showInfoWindow();
                     }
                 }
